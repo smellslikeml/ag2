@@ -925,6 +925,18 @@
          <lastmod>2026-05-03</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/daytona/environment/DaytonaCodeEnvironment/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/daytona/environment/DaytonaResources/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/docker/environment/DockerCodeEnvironment/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/files/api/FilesAPI/</loc>
          <lastmod>2026-05-03</lastmod>
     </url>
@@ -1162,6 +1174,18 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/builtin/web_search/WebSearchTool/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/code/environment/base/CodeEnvironment/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/code/environment/base/CodeRunResult/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/code/tool/SandboxCodeTool/</loc>
          <lastmod>2026-05-03</lastmod>
     </url>
     <url>
@@ -2402,6 +2426,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/tools/builtin_tools/</loc>
+         <lastmod>2026-05-03</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/tools/code_execution/</loc>
          <lastmod>2026-05-03</lastmod>
     </url>
     <url>

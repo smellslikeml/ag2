@@ -841,6 +841,10 @@
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/task_events/TaskExpired/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/task_events/TaskFailed/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
@@ -1110,6 +1114,22 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/streams/redis/stream/RedisStream/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/task/Task/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/task/TaskMetadata/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/task/TaskSpec/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/task/TaskState/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>
@@ -2318,6 +2338,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/task_delegation/</loc>
+         <lastmod>2026-05-06</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/tasks/</loc>
          <lastmod>2026-05-06</lastmod>
     </url>
     <url>

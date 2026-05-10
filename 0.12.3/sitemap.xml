@@ -1041,7 +1041,7 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/SessionAdapter/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/ChannelAdapter/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1101,7 +1101,39 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/ChannelManifest/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/ChannelMetadata/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/ChannelState/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/Expectation/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/Participant/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/ParticipantRole/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/channel/ParticipantSchema/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/agent_client/AgentClient/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/channel/Channel/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1129,7 +1161,11 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/session/Session/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/plugin/NetworkContextPolicy/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/plugin/NetworkPlugin/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1146,6 +1182,30 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/task/ClientTask/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/channels/make_channels_tool/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/context/make_context_tool/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/delegate/make_delegate_tool/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/peers/make_peers_tool/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/say/make_say_tool/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/client/tools/tasks/make_tasks_tool/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1217,7 +1277,7 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/expectations/NotifySessionHandler/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/expectations/NotifyChannelHandler/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1257,6 +1317,18 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/channel_metadata_path/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/channel_tasks_index_path/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/channels_root/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/inbox_cursor_path/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
@@ -1286,18 +1358,6 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/runtime_path/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/session_metadata_path/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/session_tasks_index_path/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/hub/layout/sessions_root/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -1357,6 +1417,10 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/rule/ChannelTypeAccess/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/rule/InboxBlock/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
@@ -1373,39 +1437,7 @@
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/rule/SessionTypeAccess/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/rule/parse_duration/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/Expectation/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/Participant/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/ParticipantRole/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/ParticipantSchema/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/SessionManifest/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/SessionMetadata/</loc>
-         <lastmod>2026-05-10</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/session/SessionState/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>
@@ -3034,6 +3066,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/network/migration_from_group_chat/</loc>
+         <lastmod>2026-05-10</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/network/network_assigned_tools/</loc>
          <lastmod>2026-05-10</lastmod>
     </url>
     <url>

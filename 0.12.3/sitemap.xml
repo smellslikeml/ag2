@@ -1921,6 +1921,18 @@
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/toolkits/mcp_server/toolkit/MCPServer/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/toolkits/mcp_server/types/MCPServerConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/toolkits/mcp_server/types/MCPStdioServerConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/cache/AbstractCache/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
@@ -3210,6 +3222,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/tools/local_shell/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/tools/mcp_servers/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>

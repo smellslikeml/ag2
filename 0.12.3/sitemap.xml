@@ -929,6 +929,22 @@
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/voice/RecordedAudioEvent/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/voice/SynthesizedAudioEvent/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/voice/TranscriptionChunkEvent/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/voice/TranscriptionCompletedEvent/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/daytona/environment/DaytonaCodeEnvironment/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
@@ -998,6 +1014,34 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/knowledge/sqlite/SqliteKnowledgeStore/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/gemini/RealTimeConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/observer/TTSObserver/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/openai/RealTimeConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/openai/STTConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/openai/STTTranslationConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/openai/TTSConfig/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/live/realtime/LiveAgent/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
@@ -1613,27 +1657,31 @@
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/loop_detector/LoopDetector/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/loop_detector/LoopDetector/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/observer/BaseObserver/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/observer/BaseObserver/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/observer/Observer/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/observer/CompositeObserver/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/observer/StreamObserver/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/observer/Observer/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/observer/observer_func/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/observer/StreamObserver/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observer/token_monitor/TokenMonitor/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/observer/observer_func/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/observers/token_monitor/TokenMonitor/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>
@@ -3026,6 +3074,18 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/inputs/inputs/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/live/live/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/live/live_agent/</loc>
+         <lastmod>2026-05-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/live/stt_tts/</loc>
          <lastmod>2026-05-11</lastmod>
     </url>
     <url>

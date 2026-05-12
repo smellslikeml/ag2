@@ -1089,7 +1089,15 @@
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/default_build_packet_envelope/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/default_build_round_envelope/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/default_build_text_envelope/</loc>
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>
@@ -1098,6 +1106,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/default_render_envelope/</loc>
+         <lastmod>2026-05-12</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/network/adapters/base/default_tools_for/</loc>
          <lastmod>2026-05-12</lastmod>
     </url>
     <url>

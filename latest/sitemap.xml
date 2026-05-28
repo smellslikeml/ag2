@@ -1165,6 +1165,10 @@
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/eval/scorers/threshold/threshold/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/eval/scorers/tools/no_tool_errors/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
@@ -1478,6 +1482,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/docker/environment/DockerCodeEnvironment/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/tools/search/exa/ExaToolkit/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>
@@ -2462,10 +2470,6 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/search/duckduckgo/DuckDuckSearchTool/</loc>
-         <lastmod>2026-05-28</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/search/exa/ExaToolkit/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>
@@ -3754,6 +3758,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/evaluation/variants/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/extensions/tools/search/exa/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>

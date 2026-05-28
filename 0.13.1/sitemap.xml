@@ -1481,6 +1481,10 @@
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/tools/search/tinyfish/TinyFishSearchToolkit/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/files/api/FilesAPI/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
@@ -3465,6 +3469,14 @@
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/tools/experimental/TinyFishFetchTool/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/tools/experimental/TinyFishSearchTool/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/tools/experimental/TinyFishTool/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
@@ -3742,6 +3754,10 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/beta/evaluation/variants/</loc>
+         <lastmod>2026-05-28</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/beta/extensions/tools/search/tinyfish/</loc>
          <lastmod>2026-05-28</lastmod>
     </url>
     <url>

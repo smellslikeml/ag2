@@ -1481,7 +1481,7 @@
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/daytona/environment/DaytonaCodeEnvironment/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/daytona/environment/DaytonaEnvironment/</loc>
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
@@ -1489,7 +1489,7 @@
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/docker/environment/DockerCodeEnvironment/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/extensions/docker/environment/DockerEnvironment/</loc>
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
@@ -2521,6 +2521,42 @@
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/adapter/code/CodeAdapter/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/adapter/code/LanguageRunner/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/adapter/shell/ShellAdapter/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/base/ExecResult/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/base/Sandbox/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/base/SandboxBase/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/environment/LocalEnvironment/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/factory/SandboxFactory/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/sandbox/factory/SingletonFactory/</loc>
+         <lastmod>2026-06-04</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/search/duckduckgo/DuckDuckSearchTool/</loc>
          <lastmod>2026-06-04</lastmod>
     </url>
@@ -2533,15 +2569,7 @@
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/shell/environment/base/ShellEnvironment/</loc>
-         <lastmod>2026-06-04</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/shell/environment/local/LocalShellEnvironment/</loc>
-         <lastmod>2026-06-04</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/shell/tool/LocalShellTool/</loc>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/shell/tool/SandboxShellTool/</loc>
          <lastmod>2026-06-04</lastmod>
     </url>
     <url>

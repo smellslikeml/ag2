@@ -1465,6 +1465,10 @@
          <lastmod>2026-06-11</lastmod>
     </url>
     <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/types/UsageEvent/</loc>
+         <lastmod>2026-06-11</lastmod>
+    </url>
+    <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/events/voice/RecordedAudioEvent/</loc>
          <lastmod>2026-06-11</lastmod>
     </url>
@@ -2686,6 +2690,14 @@
     </url>
     <url>
          <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/tools/toolkits/mcp_server/types/MCPStdioServerConfig/</loc>
+         <lastmod>2026-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/usage/UsageRecord/</loc>
+         <lastmod>2026-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.ag2.ai/latest/docs/api-reference/autogen/beta/usage/UsageReport/</loc>
          <lastmod>2026-06-11</lastmod>
     </url>
     <url>

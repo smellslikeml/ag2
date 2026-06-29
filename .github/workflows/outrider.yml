@@ -33,16 +33,6 @@ on:
         description: 'Pinned arxiv_id (must already be in the candidate pool).'
         required: false
         default: ''
-    inputs:
-      pin-method:
-        description: 'Method/technique query or arxiv_id to implement directly. Bypasses selection.'
-        required: false
-        default: ''
-      pin-arxiv:
-        description: 'Pinned arxiv_id (must already be in the candidate pool).'
-        required: false
-        default: ''
-
 jobs:
   recommend:
     runs-on: ubuntu-latest

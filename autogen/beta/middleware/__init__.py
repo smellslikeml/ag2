@@ -14,6 +14,7 @@ from .base import (
     ToolResultType,
 )
 from .builtin import (
+    ContextElasticizer,
     HistoryLimiter,
     LoggingMiddleware,
     RetryMiddleware,
@@ -26,6 +27,7 @@ __all__ = (
     "AgentTurn",
     "BaseMiddleware",
     "ConditionalMiddleware",
+    "ContextElasticizer",
     "HistoryLimiter",
     "HumanInputHook",
     "LLMCall",

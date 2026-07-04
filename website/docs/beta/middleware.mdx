@@ -337,7 +337,7 @@ agent = Agent(
 
 ## Built-In Middleware
 
-AG2 Beta currently includes four built-in middleware in `autogen.beta.middleware`:
+AG2 Beta currently includes five built-in middleware in `autogen.beta.middleware`:
 
 ### `LoggingMiddleware`
 
@@ -397,6 +397,22 @@ Trims the event history to fit within an approximate token budget before the mod
 It uses a character-based estimate controlled by `chars_per_token`.
 
 Use it when you need lightweight context budgeting without depending on a model-specific tokenizer.
+
+### `ContextElasticizer`
+
+```python linenums="1"
+from autogen.beta import Agent
+from autogen.beta.middleware import ContextElasticizer
+
+agent = Agent(..., middleware=[ContextElasticizer(raw_steps=4)])
+```
+
+Adapts the event history before each model call by assigning every step one of three elastic types: the most recent `raw_steps` steps pass through unchanged, older steps that still fit the abstraction budget are collapsed into compact digests, and the oldest steps beyond the budget are dropped from the view sent to the model.
+
+This is reversible: the elasticizer only ever builds the view handed to the model — it never mutates the agent's stream, so the raw events behind every abstracted or dropped step remain available losslessly.
+It also caches the raw events behind each digest it emits and exposes them through `expand(...)`.
+
+Use it when `HistoryLimiter` or `TokenLimiter` are too coarse — you want older context kept reachable as a digest rather than discarded outright.
 
 ## Conditional Middleware
 

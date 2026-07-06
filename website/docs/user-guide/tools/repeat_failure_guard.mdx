@@ -1,0 +1,91 @@
+---
+title: "Repeat Failure Guard"
+sidebarTitle: "Repeat Failure Guard"
+---
+
+# Repeat Failure Guard
+
+`#!python repeat_failure_guard()` is a built-in [tool middleware](/docs/beta/tools/tool_middleware) that blocks a tool call from **re-executing when the same call already failed** earlier in the session. On a repeat, it returns a `ToolErrorEvent` carrying the prior failure instead of invoking `#!python call_next`.
+
+This keeps an agent from hammering a failing tool with identical arguments — for example, a tool that raises against a malformed input, an unreachable host, or a missing record. It pairs naturally with [`approval_required()`](/docs/beta/tools/approval_required), which gates *whether* a call runs at all; the guard gates *whether a known-bad call runs again*.
+
+## Quick start
+
+Attach the guard to a tool the same way as any other tool middleware — through the `#!python middleware=` argument of [`@tool`](/docs/beta/tools/tools):
+
+```python linenums="1" hl_lines="5 8"
+import asyncio
+
+from ag2 import Agent, tool
+from ag2.config import OpenAIConfig
+from ag2.middleware import repeat_failure_guard
+
+
+@tool(
+    middleware=[repeat_failure_guard()],
+)
+def lookup_user(user_id: str) -> str:
+    """Look up a user by ID."""
+    raise ValueError(f"unknown user_id: {user_id}")
+
+
+agent = Agent(
+    "assistant",
+    config=OpenAIConfig("gpt-4o-mini"),
+    tools=[lookup_user],
+)
+
+
+async def main() -> None:
+    reply = await agent.ask("Look up user abc-123, then try abc-123 again.")
+    print(await reply.content())
+
+
+asyncio.run(main())
+```
+
+The **first** call to `#!python lookup_user("abc-123")` runs and fails normally; the agent sees the `#!python ValueError`. A **second** call with the same arguments is blocked before re-execution — the agent receives a `ToolErrorEvent` whose error reads:
+
+```
+Blocked by repeat-failure guard: prior failure `unknown user_id: abc-123`
+```
+
+…instead of paying for the failed call a second time. The agent can then correct its arguments or stop retrying.
+
+## Only failures are tracked
+
+A call that **succeeds** is never recorded, so it is never blocked on retry. Repeated identical calls are only blocked when a prior identical call failed:
+
+| Prior call result | Repeat call behavior |
+| --- | --- |
+| Failed (`ToolErrorEvent`) | Blocked before re-execution |
+| Succeeded (`ToolResultEvent`) | Runs again normally |
+
+This makes the guard safe for idempotent tools you may legitimately call several times — only the *broken* call paths are short-circuited.
+
+## Order-independent argument matching
+
+Tool-call arguments arrive as a JSON string whose key order is not guaranteed across calls. The guard canonicalizes arguments before comparing them, so reordered keys are recognized as the same call:
+
+```json
+{"a": 1, "b": 2}   // fails first
+{"b": 2, "a": 1}   // semantically identical → blocked on retry
+```
+
+If the arguments blob is not valid JSON, it is compared verbatim.
+
+## Annotate mode
+
+Pass `#!python block=False` to let repeated failed calls **through** while still recording them in the session log. Use it when you want observability over the retry pattern without changing execution behavior:
+
+```python linenums="1" hl_lines="2-4"
+@tool(
+    middleware=[repeat_failure_guard(block=False)],
+)
+def flaky_call(query: str) -> str:
+    """A call whose failures we want to observe but not gate."""
+    ...
+```
+
+!!! note
+    State is scoped to `#!python context.variables` for the current session — there is **no cross-session persistence**. Each new session starts with an empty failure log. The guard is a stateless predicate over `#!python (tool_name, arguments)`; it does not persist, share, or reason across sessions.

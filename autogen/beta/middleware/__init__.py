@@ -19,6 +19,7 @@ from .builtin import (
     RetryMiddleware,
     TelemetryMiddleware,
     TokenLimiter,
+    ToolAttention,
     approval_required,
 )
 
@@ -34,6 +35,7 @@ __all__ = (
     "RetryMiddleware",
     "TelemetryMiddleware",
     "TokenLimiter",
+    "ToolAttention",
     "ToolExecution",
     "ToolMiddleware",
     "ToolResultType",

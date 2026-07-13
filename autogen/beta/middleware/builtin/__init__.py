@@ -8,6 +8,7 @@ from .history_limiter import HistoryLimiter
 from .llm_retry import RetryMiddleware
 from .logging import LoggingMiddleware
 from .token_limiter import TokenLimiter
+from .tool_attention import ToolAttention
 from .tools import approval_required
 
 try:
@@ -21,5 +22,6 @@ __all__ = (
     "RetryMiddleware",
     "TelemetryMiddleware",
     "TokenLimiter",
+    "ToolAttention",
     "approval_required",
 )

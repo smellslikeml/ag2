@@ -32,6 +32,17 @@ scorecard::
         agent_judge(config, criterion="Answer is correct vs reference.", key="correctness"),
         agent_judge(config, criterion="Claims are grounded in tool results.", key="faithfulness"),
     ]
+
+For fine-grained verification with continuous scoring, ``llm_verifier`` implements
+the LLM-as-a-Verifier framework — the LLM outputs a probability distribution over
+scores rather than a single discrete value, enabling better calibration through
+expectation computation, repeated evaluation, and criteria decomposition::
+
+    from autogen.beta.eval.scorers import llm_verifier
+
+    scorers = [
+        llm_verifier(config, criterion="Answer correctness", key="correctness", max_score=20, num_repeats=3),
+    ]
 """
 
 from .attribution import ERROR_MODES, Attribution, failure_attribution
@@ -39,6 +50,7 @@ from .correctness import final_answer_matches
 from .cost import token_budget
 from .human_pairwise import export_pairwise_cases, human_labels, human_pairwise
 from .judge import Verdict, agent_judge
+from .llm_verifier import LLMVerifierResult, llm_verifier
 from .pairwise_judge import PairwiseVerdict, pairwise_judge
 from .threshold import threshold
 from .tools import no_tool_errors, tool_called
@@ -46,6 +58,7 @@ from .tools import no_tool_errors, tool_called
 __all__ = (
     "ERROR_MODES",
     "Attribution",
+    "LLMVerifierResult",
     "PairwiseVerdict",
     "Verdict",
     "agent_judge",
@@ -54,6 +67,7 @@ __all__ = (
     "final_answer_matches",
     "human_labels",
     "human_pairwise",
+    "llm_verifier",
     "no_tool_errors",
     "pairwise_judge",
     "threshold",

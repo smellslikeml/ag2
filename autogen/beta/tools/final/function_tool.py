@@ -17,6 +17,7 @@ from autogen.beta.events import ToolCallEvent, ToolErrorEvent, ToolResultEvent
 from autogen.beta.middleware import BaseMiddleware, ToolExecution, ToolMiddleware, ToolResultType
 from autogen.beta.tools.schemas import ToolSchema
 from autogen.beta.tools.tool import Tool
+from autogen.beta.tools.tool_examples import enhance_tool_description
 from autogen.beta.utils import CONTEXT_OPTION_NAME, build_model
 
 FunctionParameters: TypeAlias = dict[str, Any]
@@ -143,6 +144,7 @@ def tool(
     description: str | None = None,
     schema: FunctionParameters | None = None,
     sync_to_thread: bool = True,
+    add_examples: bool = False,
     middleware: Iterable[ToolMiddleware] = (),
 ) -> FunctionTool: ...
 
@@ -155,6 +157,7 @@ def tool(
     description: str | None = None,
     schema: FunctionParameters | None = None,
     sync_to_thread: bool = True,
+    add_examples: bool = False,
     middleware: Iterable[ToolMiddleware] = (),
 ) -> Callable[[Callable[..., Any]], FunctionTool]: ...
 
@@ -166,6 +169,7 @@ def tool(
     description: str | None = None,
     schema: FunctionParameters | None = None,
     sync_to_thread: bool = True,
+    add_examples: bool = False,
     middleware: Iterable[ToolMiddleware] = (),
 ) -> FunctionTool | Callable[[Callable[..., Any]], FunctionTool]:
     def make_tool(f: Callable[..., Any]) -> FunctionTool:
@@ -175,15 +179,23 @@ def tool(
             serialize_result=False,
         )
 
+        base_schema = schema or get_schema(
+            call_model,
+            exclude=(CONTEXT_OPTION_NAME,),
+        )
+        tool_name = name or f.__name__
+        base_description = description or f.__doc__ or ""
+
+        # Enhance description with examples if requested
+        final_description = (
+            enhance_tool_description(tool_name, base_description, base_schema) if add_examples else base_description
+        )
+
         return FunctionTool(
             call_model,
-            name=name or f.__name__,
-            description=description or f.__doc__ or "",
-            schema=schema
-            or get_schema(
-                call_model,
-                exclude=(CONTEXT_OPTION_NAME,),
-            ),
+            name=tool_name,
+            description=final_description,
+            schema=base_schema,
             middleware=middleware,
         )
 

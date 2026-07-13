@@ -15,6 +15,7 @@ from fast_depends.pydantic.schema import get_schema
 from autogen.beta.annotations import Context
 from autogen.beta.events import ToolCallEvent, ToolErrorEvent, ToolResultEvent
 from autogen.beta.middleware import BaseMiddleware, ToolExecution, ToolMiddleware, ToolResultType
+from autogen.beta.tools.example_discovery import Proposer, play_with_tool
 from autogen.beta.tools.schemas import ToolSchema
 from autogen.beta.tools.tool import Tool
 from autogen.beta.tools.tool_examples import enhance_tool_description
@@ -51,6 +52,7 @@ class FunctionTool(Tool):
         "schema",
         "provider",
         "_middleware",
+        "_func",
     )
 
     def __init__(
@@ -61,9 +63,13 @@ class FunctionTool(Tool):
         description: str,
         schema: FunctionParameters,
         middleware: Iterable[ToolMiddleware] = (),
+        func: Callable[..., Any] | None = None,
     ) -> None:
         self.model = model
         self._middleware: tuple[ToolMiddleware, ...] = tuple(middleware)
+        # The raw callable, retained so the tool can be *played* with at
+        # runtime to discover verified usage examples (see discover_examples).
+        self._func = func
 
         self.schema = FunctionToolSchema(
             function=FunctionDefinition(
@@ -87,6 +93,45 @@ class FunctionTool(Tool):
 
     async def schemas(self, context: "Context") -> list[FunctionToolSchema]:
         return [self.schema]
+
+    async def discover_examples(
+        self,
+        *,
+        proposer: "Proposer | None" = None,
+        max_iterations: int = 3,
+        expand_num: int = 4,
+        top_k: int = 3,
+    ) -> "FunctionTool":
+        """Play with this tool to discover verified usage examples.
+
+        Executes the tool with proposed invocations, keeps the ones that
+        succeed, and returns a new ``FunctionTool`` whose description embeds
+        those execution-grounded examples. Adapted from PLAY2PROMPT
+        (https://arxiv.org/abs/2503.14432v2). Returns ``self`` unchanged when
+        the underlying callable is unavailable.
+        """
+        if self._func is None:
+            return self
+
+        fn = self.schema.function
+        result = await play_with_tool(
+            self._func,
+            name=fn.name,
+            description=fn.description,
+            parameters=fn.parameters,
+            proposer=proposer,
+            max_iterations=max_iterations,
+            expand_num=expand_num,
+            top_k=top_k,
+        )
+        return FunctionTool(
+            self.model,
+            name=fn.name,
+            description=result.enhanced_description,
+            schema=fn.parameters,
+            middleware=self._middleware,
+            func=self._func,
+        )
 
     def set_provider(self, provider: Provider) -> None:
         self.provider = provider
@@ -197,6 +242,7 @@ def tool(
             description=final_description,
             schema=base_schema,
             middleware=middleware,
+            func=f,
         )
 
     if function:

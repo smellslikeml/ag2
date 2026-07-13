@@ -43,6 +43,10 @@ on:
         description: 'When true, run the research phase to enrich the coding session with HF Hub linkage + sibling impls (v1.7.19+).'
         required: false
         default: 'false'
+      maintain-state:
+        description: 'When true, read .remyx/repo_intel.yaml from fork main and thread cross-run learning into the coding session.'
+        required: false
+        default: 'false'
 
 jobs:
   recommend:
@@ -70,7 +74,7 @@ jobs:
           if [ -n "$MODEL_INPUT" ]; then
             echo "ANTHROPIC_MODEL=$MODEL_INPUT" >> "$GITHUB_ENV"
           fi
-      - uses: remyxai/outrider@v1
+      - uses: remyxai/outrider@feat/repo-intel-phase1
         with:
           interest-id: 8eac771b-9f9d-4de9-8103-f9711e8bea18
           rate-limit-days: '0'
@@ -81,4 +85,5 @@ jobs:
           start-from-ref: ${{ inputs.start-from-ref }}
           publish: ${{ inputs.publish }}
           staged-synthesis: ${{ inputs.staged-synthesis }}
+          maintain-state: ${{ inputs.maintain-state }}
           model-base-url: ${{ inputs.provider == 'zai' && 'https://api.z.ai/api/anthropic' || '' }}

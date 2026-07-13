@@ -39,6 +39,10 @@ on:
         description: 'Optional branch/tag/SHA to start the coding session from (REMYX-219 refinement mode).'
         required: false
         default: ''
+      staged-synthesis:
+        description: 'When true, run the research phase to enrich the coding session with HF Hub linkage + sibling impls (v1.7.19+).'
+        required: false
+        default: 'false'
 
 jobs:
   recommend:
@@ -76,4 +80,5 @@ jobs:
           lead-content: ${{ inputs.lead-content }}
           start-from-ref: ${{ inputs.start-from-ref }}
           publish: ${{ inputs.publish }}
+          staged-synthesis: ${{ inputs.staged-synthesis }}
           model-base-url: ${{ inputs.provider == 'zai' && 'https://api.z.ai/api/anthropic' || '' }}

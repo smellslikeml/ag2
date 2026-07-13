@@ -1,67 +1,91 @@
 schema_version: 1
 fork: smellslikeml/ag2
-last_updated: "2026-07-13"
-
+last_updated: '2026-07-13T17:57:06Z'
 observed_landing_zones:
-  - path: "autogen/beta/tools/"
-    shape_tags: ["library-shape-public-api", "decorator-hook", "module-add-with-export"]
-    confirmed_by:
-      - arxiv: "2607.07321v1"
-        paper_title: "From Atomic Actions to Standard Operating Procedures"
-        mode: "Mode 2 (adapted port)"
-        branch: "from-atomic-actions-to-standard-operating-procedures-iterati"
-        call_site_specifics: "SopExtractor + create_sop_tool public API exported from autogen.beta.tools; no internal caller wired but shape landed cleanly"
-        timestamp: "2026-07-13"
-      - arxiv: "2503.14432v2"
-        paper_title: "PLAY2PROMPT: Zero-shot Tool Instruction Optimization"
-        mode: "Mode 3 (inspired experiment)"
-        branch: "play2prompt-zero-shot-tool-instruction-optimization-for-llm-"
-        call_site_specifics: "@tool(add_examples=True) decorator param + tool_examples.py schema-based example generator; modifies existing function_tool.py"
-        timestamp: "2026-07-13"
-      - arxiv: "2503.14432v2"
-        paper_title: "PLAY2PROMPT: Zero-shot Tool Instruction Optimization (Opus refinement)"
-        mode: "Mode 2 (adapted port)"
-        pr: 14
-        call_site_specifics: "FunctionTool.play() method + tool_play.py runtime execution loop (rejection sampling on real tool execution); modifies existing function_tool.py"
-        timestamp: "2026-07-13"
-    last_observed: "2026-07-13"
-
+- path: autogen/beta/tools/
+  shape_tags:
+  - library-shape-public-api
+  - decorator-hook
+  - module-add-with-export
+  confirmed_by:
+  - arxiv: 2607.07321v1
+    paper_title: From Atomic Actions to Standard Operating Procedures
+    mode: Mode 2 (adapted port)
+    branch: from-atomic-actions-to-standard-operating-procedures-iterati
+    call_site_specifics: SopExtractor + create_sop_tool public API exported from autogen.beta.tools;
+      no internal caller wired but shape landed cleanly
+    timestamp: '2026-07-13'
+  - arxiv: 2503.14432v2
+    paper_title: 'PLAY2PROMPT: Zero-shot Tool Instruction Optimization'
+    mode: Mode 3 (inspired experiment)
+    branch: play2prompt-zero-shot-tool-instruction-optimization-for-llm-
+    call_site_specifics: '@tool(add_examples=True) decorator param + tool_examples.py
+      schema-based example generator; modifies existing function_tool.py'
+    timestamp: '2026-07-13'
+  - arxiv: 2503.14432v2
+    paper_title: 'PLAY2PROMPT: Zero-shot Tool Instruction Optimization (Opus refinement)'
+    mode: Mode 2 (adapted port)
+    pr: 14
+    call_site_specifics: FunctionTool.play() method + tool_play.py runtime execution
+      loop (rejection sampling on real tool execution); modifies existing function_tool.py
+    timestamp: '2026-07-13'
+  last_observed: '2026-07-13'
+- path: autogen/beta/eval/scorers/
+  shape_tags:
+  - unclassified
+  confirmed_by:
+  - arxiv: 2607.05391v1
+    mode: Mode 1 (direct port)
+    call_site_specifics: (none)
+    branch: llm-as-a-verifier-a-general-purpose-verification-framework
+    timestamp: '2026-07-13T17:57:06Z'
+  last_observed: '2026-07-13T17:57:06Z'
 rejected_shapes:
-  - shape_tag: "reranker-decision-layer"
-    reason_code: "no_public_middleware_surface"
-    reason_summary: "reranking mechanisms operate on inputs produced by another layer (retrieval scoring, task decomposition) that ag2 doesn't natively expose as a public middleware surface; no landing zone for a reranker as a standalone module"
-    when_this_penalty_should_NOT_apply:
-      - "candidate proposes to ADD a public middleware surface (retrieval/scoring hook) as part of its landing plan"
-      - "reranking operates on an EXISTING public surface (e.g., a reranker over model outputs or tool responses) rather than over tool selections"
-    observed:
-      - {arxiv: "2607.06283v1", timestamp: "2026-07-13",
-         paper_title: "Task Decomposition-Guided Reranking for Adaptive Agent Skill Retrieval"}
-
-  - shape_tag: "survey-or-analysis-paper"
-    reason_code: "not_a_method_paper"
-    reason_summary: "surveys and analysis papers propose classification frameworks or comparative studies rather than a direct-port mechanism; the coding session has no concrete mechanism to implement"
-    when_this_penalty_should_NOT_apply:
-      - "the survey includes a novel benchmark harness the fork could adopt as its own"
-      - "the paper's Section N describes a specific mechanism worth extracting, even if the paper's overall shape is analytical"
-    observed:
-      - {arxiv: "2604.02369v3", timestamp: "2026-07-13",
-         paper_title: "Beyond Message Passing: A Semantic View of Agent Communication Protocols"}
-
-  - shape_tag: "http-serving-framework"
-    reason_code: "domain_mismatch"
-    reason_summary: "papers whose core contribution is HTTP/network-serving infrastructure (unified HTTP + MCP endpoints, streaming APIs, etc.) don't fit an agent framework's productive surface; ag2 consumes MCP servers from outside rather than serving them"
-    when_this_penalty_should_NOT_apply:
-      - "candidate's mechanism is agent-runtime-adjacent (e.g., tool loading from MCP) rather than the HTTP-serving side"
-    observed:
-      - {arxiv: "2605.22733v1", timestamp: "2026-07-13",
-         paper_title: "HarnessAPI: A Skill-First Framework for Unified Streaming APIs and MCP Tools"}
-
+- shape_tag: reranker-decision-layer
+  reason_code: no_public_middleware_surface
+  reason_summary: reranking mechanisms operate on inputs produced by another layer
+    (retrieval scoring, task decomposition) that ag2 doesn't natively expose as a
+    public middleware surface; no landing zone for a reranker as a standalone module
+  when_this_penalty_should_NOT_apply:
+  - candidate proposes to ADD a public middleware surface (retrieval/scoring hook)
+    as part of its landing plan
+  - reranking operates on an EXISTING public surface (e.g., a reranker over model
+    outputs or tool responses) rather than over tool selections
+  observed:
+  - arxiv: 2607.06283v1
+    timestamp: '2026-07-13'
+    paper_title: Task Decomposition-Guided Reranking for Adaptive Agent Skill Retrieval
+- shape_tag: survey-or-analysis-paper
+  reason_code: not_a_method_paper
+  reason_summary: surveys and analysis papers propose classification frameworks or
+    comparative studies rather than a direct-port mechanism; the coding session has
+    no concrete mechanism to implement
+  when_this_penalty_should_NOT_apply:
+  - the survey includes a novel benchmark harness the fork could adopt as its own
+  - the paper's Section N describes a specific mechanism worth extracting, even if
+    the paper's overall shape is analytical
+  observed:
+  - arxiv: 2604.02369v3
+    timestamp: '2026-07-13'
+    paper_title: 'Beyond Message Passing: A Semantic View of Agent Communication Protocols'
+- shape_tag: http-serving-framework
+  reason_code: domain_mismatch
+  reason_summary: papers whose core contribution is HTTP/network-serving infrastructure
+    (unified HTTP + MCP endpoints, streaming APIs, etc.) don't fit an agent framework's
+    productive surface; ag2 consumes MCP servers from outside rather than serving
+    them
+  when_this_penalty_should_NOT_apply:
+  - candidate's mechanism is agent-runtime-adjacent (e.g., tool loading from MCP)
+    rather than the HTTP-serving side
+  observed:
+  - arxiv: 2605.22733v1
+    timestamp: '2026-07-13'
+    paper_title: 'HarnessAPI: A Skill-First Framework for Unified Streaming APIs and
+      MCP Tools'
 coordination_signals: []
-
 exploration_budget:
   novel_shape_fraction: 0.25
-  last_novel_dispatch: "2026-07-13"
-
+  last_novel_dispatch: '2026-07-13'
 mode_history:
   mode_1_count: 0
   mode_2_count: 2

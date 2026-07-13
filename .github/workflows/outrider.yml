@@ -1,13 +1,18 @@
 name: Outrider
 
 on:
+  # Continuous-mode cron. Fires every 30 min; concurrency group serializes
+  # so only one Outrider dispatch runs at a time per fork — new invocations
+  # queue rather than parallel-firing.
+  schedule:
+    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       provider:
         description: 'Which model provider to route Claude Code at.'
         type: choice
         required: false
-        default: 'anthropic'
+        default: 'zai'
         options:
           - anthropic
           - zai
@@ -24,9 +29,9 @@ on:
         required: false
         default: ''
       publish:
-        description: 'pr (default) or branch — branch mode pushes without opening PR/Issue.'
+        description: 'pr or branch (default). branch mode pushes without opening PR/Issue — cheap continuous-mode default.'
         required: false
-        default: 'pr'
+        default: 'branch'
       claude-timeout:
         description: 'Wall-clock seconds for the Claude Code agent calls.'
         required: false
@@ -36,17 +41,22 @@ on:
         required: false
         default: ''
       start-from-ref:
-        description: 'Optional branch/tag/SHA to start the coding session from (REMYX-219 refinement mode).'
+        description: 'Optional branch/tag/SHA to start the coding session from.'
         required: false
         default: ''
       staged-synthesis:
-        description: 'When true, run the research phase to enrich the coding session with HF Hub linkage + sibling impls (v1.7.19+).'
+        description: 'When true, run the research phase to enrich the coding session with HF Hub linkage + sibling impls.'
         required: false
         default: 'false'
       maintain-state:
-        description: 'When true, read .remyx/repo_intel.yaml from fork main and thread cross-run learning into the coding session.'
+        description: 'When true, read + write .remyx/repo_intel.yaml on the fork to accumulate cross-run learning.'
         required: false
-        default: 'false'
+        default: 'true'
+
+# Serialize dispatches per fork — cron + manual can queue but never overlap.
+concurrency:
+  group: outrider-${{ github.repository }}
+  cancel-in-progress: false
 
 jobs:
   recommend:
@@ -64,9 +74,13 @@ jobs:
         env:
           ANTHROPIC_API_KEY_SECRET: ${{ secrets.ANTHROPIC_API_KEY }}
           ZAI_API_KEY_SECRET: ${{ secrets.ZAI_API_KEY }}
-          MODEL_INPUT: ${{ inputs.model }}
+          # For scheduled (cron) runs, ${{ inputs.* }} is null — fall back
+          # to the input's default value written below. Only workflow_dispatch
+          # populates inputs; cron uses the on: block's defaults.
+          MODEL_INPUT: ${{ inputs.model || '' }}
+          PROVIDER: ${{ inputs.provider || 'zai' }}
         run: |
-          if [ "${{ inputs.provider }}" = "zai" ]; then
+          if [ "$PROVIDER" = "zai" ]; then
             echo "ANTHROPIC_AUTH_TOKEN=$ZAI_API_KEY_SECRET" >> "$GITHUB_ENV"
           else
             echo "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY_SECRET" >> "$GITHUB_ENV"
@@ -74,16 +88,16 @@ jobs:
           if [ -n "$MODEL_INPUT" ]; then
             echo "ANTHROPIC_MODEL=$MODEL_INPUT" >> "$GITHUB_ENV"
           fi
-      - uses: remyxai/outrider@feat/repo-intel-phase1
+      - uses: remyxai/outrider@v1
         with:
           interest-id: 8eac771b-9f9d-4de9-8103-f9711e8bea18
           rate-limit-days: '0'
-          search-method: ${{ inputs.search-method }}
-          pin-arxiv: ${{ inputs.pin-arxiv }}
-          claude-timeout: ${{ inputs.claude-timeout }}
-          lead-content: ${{ inputs.lead-content }}
-          start-from-ref: ${{ inputs.start-from-ref }}
-          publish: ${{ inputs.publish }}
-          staged-synthesis: ${{ inputs.staged-synthesis }}
-          maintain-state: ${{ inputs.maintain-state }}
-          model-base-url: ${{ inputs.provider == 'zai' && 'https://api.z.ai/api/anthropic' || '' }}
+          search-method: ${{ inputs.search-method || '' }}
+          pin-arxiv: ${{ inputs.pin-arxiv || '' }}
+          claude-timeout: ${{ inputs.claude-timeout || '900' }}
+          lead-content: ${{ inputs.lead-content || '' }}
+          start-from-ref: ${{ inputs.start-from-ref || '' }}
+          publish: ${{ inputs.publish || 'branch' }}
+          staged-synthesis: ${{ inputs.staged-synthesis || 'false' }}
+          maintain-state: ${{ inputs.maintain-state || 'true' }}
+          model-base-url: ${{ (inputs.provider || 'zai') == 'zai' && 'https://api.z.ai/api/anthropic' || '' }}

@@ -26,6 +26,13 @@ from .sandbox import LocalEnvironment
 from .search import DuckDuckSearchTool, PerplexitySearchToolkit, TavilySearchTool
 from .shell import SandboxShellTool
 from .skills import SkillPlugin, SkillSearchToolkit, SkillsToolkit
+from .sop_extraction import (
+    SopExtractor,
+    SopPattern,
+    create_sop_tool,
+    extract_and_register_sops,
+    register_sops_with_agent,
+)
 from .toolkits import FilesystemToolkit, MCPServerConfig, MCPStdioServerConfig, MCPToolkit
 
 __all__ = (
@@ -51,6 +58,8 @@ __all__ = (
     "SkillSearchToolkit",
     "SkillsTool",
     "SkillsToolkit",
+    "SopExtractor",
+    "SopPattern",
     "TavilySearchTool",
     "ToolResult",
     "Toolkit",
@@ -58,5 +67,8 @@ __all__ = (
     "WebFetchTool",
     "WebSearchTool",
     "XSearchTool",
+    "create_sop_tool",
+    "extract_and_register_sops",
+    "register_sops_with_agent",
     "tool",
 )

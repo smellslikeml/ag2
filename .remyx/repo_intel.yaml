@@ -1,6 +1,6 @@
 schema_version: 1
 fork: smellslikeml/ag2
-last_updated: '2026-07-13T17:57:06Z'
+last_updated: '2026-07-13T18:13:47Z'
 observed_landing_zones:
 - path: autogen/beta/tools/
   shape_tags:
@@ -40,6 +40,17 @@ observed_landing_zones:
     branch: llm-as-a-verifier-a-general-purpose-verification-framework
     timestamp: '2026-07-13T17:57:06Z'
   last_observed: '2026-07-13T17:57:06Z'
+- path: autogen/beta/middleware/builtin/
+  shape_tags:
+  - middleware
+  confirmed_by:
+  - arxiv: 2604.21816v1
+    mode: Mode 2 (adapted port)
+    call_site_specifics: "none (library API \u2014 exported from autogen.beta.middleware\
+      \ for external users to pass in Agent(middleware=[ToolAttention()]))"
+    branch: tool-attention-is-all-you-need-dynamic-tool-gating-and-lazy-
+    timestamp: '2026-07-13T18:13:47Z'
+  last_observed: '2026-07-13T18:13:47Z'
 rejected_shapes:
 - shape_tag: reranker-decision-layer
   reason_code: no_public_middleware_surface

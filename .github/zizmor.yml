@@ -28,3 +28,7 @@ rules:
     ignore:
       - python-package.yml
       - cli-package.yml
+  cache-poisoning:
+    ignore:
+      - cli-package.yml
+      - python-package.yml

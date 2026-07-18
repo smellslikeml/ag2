@@ -3,7 +3,7 @@ title: Recursive Search
 sidebarTitle: Recursive Search
 ---
 
-Recursive search turns a single complex query into a self-organizing swarm of search nodes that decompose, delegate, and aggregate evidence — deep-and-wide web search via progressive delegation, adapted from [WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search](https://arxiv.org/abs/2607.08662v1){.external-link target="_blank"}.
+Recursive search turns a single complex query into a self-organizing swarm of search nodes that decompose, delegate, and aggregate evidence — bounded recursive fan-out for parallel research decomposition, adapted from the `atom` and `wide` verbs of [WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search](https://arxiv.org/abs/2607.08662v1){.external-link target="_blank"}.
 
 ## How It Works
 
@@ -16,16 +16,17 @@ Two budgets keep the tree bounded:
 
 ## Search Modes
 
-Each node carries one of four modes — the paper's delegation verbs — enforced structurally in code, not just described in prompts:
+Each node carries one of two modes — the paper's `atom` and `wide` delegation verbs — enforced structurally in code, not just described in prompts:
 
 | Mode | Behavior |
 |---|---|
 | `SearchMode.ATOM` | Solves the objective directly with its own search tools. Built **without** `solve_subtasks`, so it cannot delegate. |
-| `SearchMode.DEEP` | Serial propose-then-verify drill-down; capped at 1-2 follow-up children regardless of `max_children`. |
 | `SearchMode.WIDE` | Identifies 2-3 independent aspects and delegates them as homogeneous child nodes, then aggregates. |
-| `SearchMode.ENTITY_COLLECT` | Splits an enumeration space into disjoint partitions, verifies candidates per partition, and merges the verified set. |
 
 The root node's mode is fixed by `search_mode`; every delegated child picks its own mode per subtask via `SubtaskSpec`.
+
+!!! note
+    The paper's `deep` (proposer/verifier drill-down) and `entity_collect` (split-verify-merge enumeration) verbs are intentionally out of scope for this module — they need dedicated verifier-agent and multi-strategy-sampling machinery that is a poor fit as prompt-level guidance on the generic recursive node. They are candidates for follow-up modules that compose with this one.
 
 ## Recursive Search Tool
 
@@ -71,7 +72,7 @@ print(await reply.content())
 | `search_mode` | `SearchMode` | Mode of the root node (default: `SearchMode.WIDE`) |
 | `tools` | `Iterable[Tool]` | Search/fetch tools every node uses |
 | `max_depth` | `int` | Delegation depth budget (default: `3`) |
-| `max_children` | `int` | Fan-out cap per delegation call (default: `3`; deep mode is capped at 2 regardless) |
+| `max_children` | `int` | Fan-out cap per delegation call (default: `3`) |
 | `stream` | `StreamFactory \| None` | Optional factory for per-node persistent history, e.g. `persistent_stream()` — see [Sub-task Delegation](/docs/beta/task_delegation) |
 
 ## Subtask Specifications
@@ -83,7 +84,7 @@ from autogen.beta.tools import SearchMode, SubtaskSpec
 
 spec = SubtaskSpec(
     objective="Find Qdrant's consistency guarantees under concurrent writes",
-    mode=SearchMode.DEEP,
+    mode=SearchMode.ATOM,
     context="Comparing vector databases for a RAG workload.",
 )
 ```

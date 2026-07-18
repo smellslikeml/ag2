@@ -87,8 +87,10 @@ def _tool_results_sent_to_llm(mock: MagicMock) -> str:
 
 @pytest.mark.asyncio
 class TestSearchModeContract:
-    async def test_modes_are_the_papers_four_verbs(self):
-        assert {m.value for m in SearchMode} == {"atom", "deep", "wide", "entity_collect"}
+    async def test_modes_are_the_papers_atom_and_wide_verbs(self):
+        # This module ports the paper's `atom` and `wide` verbs; `deep` and
+        # `entity_collect` are intentionally out of scope for follow-up modules.
+        assert {m.value for m in SearchMode} == {"atom", "wide"}
 
     async def test_subtask_defaults_to_atom(self):
         spec = SubtaskSpec(objective="look up a fact")
@@ -260,37 +262,6 @@ class TestModeGating:
         assert len(_starts(events)) == 2
         assert len(_failures(events)) == 1
         assert _failures(events)[0].agent_name == "node_atom_0"
-
-    async def test_deep_mode_caps_follow_ups_at_two(self):
-        """Deep nodes get a smaller fan-out cap (1-2 follow-ups) even when the
-        tool's max_children allows more."""
-        node_config = TestConfig(
-            _delegate_script("follow-up 1", "follow-up 2", "follow-up 3", mode="deep"),
-            ModelResponse(ModelMessage("level findings")),
-        )
-        parent_config = TestConfig(
-            ToolCallEvent(name="recursive_search", arguments='{"query": "research X"}'),
-            ModelResponse(ModelMessage("final synthesis")),
-        )
-        stream = MemoryStream()
-        parent = Agent(
-            "parent",
-            config=parent_config,
-            tools=[
-                recursive_search_tool(
-                    config=node_config,
-                    search_mode=SearchMode.DEEP,
-                    max_depth=1,
-                    max_children=3,
-                )
-            ],
-        )
-
-        _, events = await _run_search(parent, stream)
-
-        # root delegates at most 2 follow-ups despite max_children=3.
-        assert len(_starts(events)) == 3
-        assert _failures(events) == []
 
 
 @pytest.mark.asyncio

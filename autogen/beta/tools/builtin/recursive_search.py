@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-"""Recursive deep-and-wide web search via progressive delegation.
+"""Recursive fan-out for parallel research decomposition.
 
 Adapted from WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide
 Web Search (https://arxiv.org/abs/2607.08662v1). WebSwarm builds a delegation
@@ -11,26 +11,34 @@ tree at inference time: each node couples a local objective with a search
 results flow back up as evidence for further expansion, revision, or
 aggregation.
 
-This module ports that core mechanism onto AG2's subagent primitives:
+This module ports the paper's ``atom`` and ``wide`` verbs — the recursive
+fan-out primitive — onto AG2's subagent primitives:
 
-- Every search node is an :class:`~autogen.beta.agent.Agent` carrying the
-  caller's search tools plus a self-referential ``solve_subtasks`` tool, so
-  every node can spawn structurally identical children — true recursion,
+- Every non-atom search node is an :class:`~autogen.beta.agent.Agent` carrying
+  the caller's search tools plus a self-referential ``solve_subtasks`` tool,
+  so every node can spawn structurally identical children — true recursion,
   executed by :func:`~autogen.beta.tools.subagents.run_task` with
   ``asyncio.gather`` fan-out (in place of the paper's ThreadPoolExecutor).
-- Search modes (``atom`` / ``deep`` / ``wide`` / ``entity_collect``) are enum
-  values that gate behavior in code: ``atom`` nodes receive no delegation
-  tool at all, ``deep`` nodes are capped at 1-2 follow-up children, and
-  ``wide`` / ``entity_collect`` nodes may fan out up to ``max_children``.
+- Search modes (``atom`` / ``wide``) are enum values that gate behavior in
+  code: ``atom`` nodes receive no delegation tool at all, and ``wide`` nodes
+  may fan out up to ``max_children``.
 - The depth budget is an int threaded through tool closures. When a node's
   budget is exhausted, its ``solve_subtasks`` returns a downgrade sentinel
   instructing the node to solve the objectives itself (atom behavior)
   instead of spawning children.
 
 Substitutions vs. the paper: Serper/Jina are replaced by caller-supplied
-search/fetch tools (e.g. ``DuckDuckSearchTool`` / ``WebFetchTool``), and the
-paper's web-probing scout and cross-sibling experience reuse are intentionally
-out of scope for this port.
+search/fetch tools (e.g. ``DuckDuckSearchTool`` / ``WebFetchTool``).
+
+Intentionally out of scope for this port (candidates for follow-up modules):
+
+- The paper's ``deep`` verb (proposer/verifier architecture with structurally
+  independent source-isolated verification and survived/weakened/refuted
+  verdicts).
+- The paper's ``entity_collect`` verb (schema inference, multi-strategy
+  parallel sampling, split-verify-merge validation pipeline).
+- Web-probing scout (pre-expansion topology finding) and cross-sibling
+  experience reuse (scout subset → experience transfer for wide batches).
 """
 
 import asyncio
@@ -55,15 +63,14 @@ if TYPE_CHECKING:
 class SearchMode(str, Enum):
     """How a search node organizes its search and collaboration.
 
-    Mirrors WebSwarm's delegation verbs. The mode is enforced structurally,
-    not just described in prompts: ``ATOM`` nodes are built without the
-    ``solve_subtasks`` tool, and non-atom modes get mode-specific fan-out caps.
+    Mirrors WebSwarm's ``atom`` and ``wide`` verbs. The mode is enforced
+    structurally, not just described in prompts: ``ATOM`` nodes are built
+    without the ``solve_subtasks`` tool, and ``WIDE`` nodes may fan out up
+    to ``max_children``.
     """
 
     ATOM = "atom"
-    DEEP = "deep"
     WIDE = "wide"
-    ENTITY_COLLECT = "entity_collect"
 
 
 class SubtaskSpec(BaseModel):
@@ -76,33 +83,16 @@ class SubtaskSpec(BaseModel):
 
 _DEPTH_DOWNGRADE_SENTINEL = "DELEGATION_BUDGET_EXHAUSTED"
 
-# Per the paper, wide fan-out spans 2-3 children while deep mode spawns only
-# 1-2 serial follow-ups. These are enforced in code by capping how many
-# subtasks each mode's solve_subtasks accepts per call.
-_DEEP_FAN_OUT_CAP = 2
-
 _MODE_GUIDANCE: dict[SearchMode, str] = {
     SearchMode.ATOM: (
         "Solve the objective directly with your search tools, ReAct-style: "
         "issue focused queries, read the evidence, and answer. You cannot "
         "delegate — reply with your findings and cite the key evidence."
     ),
-    SearchMode.DEEP: (
-        "Work serially, propose-then-verify: search, check the evidence "
-        "against the objective, then drill deeper with follow-up queries. If "
-        "a follow-up question needs its own investigation, delegate it via "
-        "solve_subtasks (at most 1-2 follow-ups)."
-    ),
     SearchMode.WIDE: (
         "Cover the objective broadly: identify 2-3 independent aspects and "
         "delegate them as homogeneous child nodes via solve_subtasks, then "
         "aggregate their evidence into one answer."
-    ),
-    SearchMode.ENTITY_COLLECT: (
-        "Enumerate all entities that satisfy the objective: split the space "
-        "into disjoint partitions, sample candidate entities per partition "
-        "(delegating partitions via solve_subtasks when useful), verify each "
-        "candidate against the criteria, and merge the verified set."
     ),
 }
 
@@ -119,8 +109,6 @@ def _delegation_cap(mode: SearchMode, max_children: int) -> int:
     """Fan-out cap for a node's ``solve_subtasks``; 0 means no delegation."""
     if mode is SearchMode.ATOM:
         return 0
-    if mode is SearchMode.DEEP:
-        return min(max_children, _DEEP_FAN_OUT_CAP)
     return max_children
 
 
@@ -204,9 +192,8 @@ def _make_solve_subtasks_tool(
         name="solve_subtasks",
         description=(
             "Delegate self-contained sub-objectives to child search nodes. "
-            "Each subtask names its own mode: atom (direct fact lookup), deep "
-            "(serial drill-down), wide (parallel aspect coverage), or "
-            f"entity_collect (split-verify-merge enumeration). At most "
+            "Each subtask names its own mode: atom (direct fact lookup) or "
+            "wide (parallel aspect coverage). At most "
             f"{max_children} subtasks are accepted per call; extras are "
             "dropped. Child results return here as evidence you can expand, "
             "revise, or aggregate."

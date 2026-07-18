@@ -1,6 +1,6 @@
 schema_version: 1
 fork: smellslikeml/ag2
-last_updated: '2026-07-13T19:14:47Z'
+last_updated: '2026-07-13T20:40:58Z'
 observed_landing_zones:
 - path: autogen/beta/tools/
   shape_tags:
@@ -57,12 +57,12 @@ observed_landing_zones:
   confirmed_by:
   - arxiv: 2607.08662v1
     mode: Mode 2 (adapted port)
-    call_site_specifics: "autogen.beta.tools.subagents.recursive_search_tool \u2014\
-      \ library API export that external users import when constructing agents with\
-      \ recursive search capabilities"
-    branch: webswarm-recursive-multi-agent-orchestration-for-deep-and-wi
-    timestamp: '2026-07-13T19:14:47Z'
-  last_observed: '2026-07-13T19:14:47Z'
+    call_site_specifics: 'Library API exported from autogen.beta.tools.subagents (__init__.py
+      re-exports recursive_search_tool, recursive_search_agent, SearchMode via __all__).
+      External users invoke: e.g., ''from autogen.beta.t'
+    branch: webswarm-recursive-multi-agent-orchestration-for-deep-and-wi-v2
+    timestamp: '2026-07-13T20:40:58Z'
+  last_observed: '2026-07-13T20:40:58Z'
 rejected_shapes:
 - shape_tag: reranker-decision-layer
   reason_code: no_public_middleware_surface

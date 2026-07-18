@@ -1,0 +1,128 @@
+name: Outrider Moonshot refine smoke (ag2)
+
+# Iter 2 — post-Issue-#16 (fidelity_skipped, dead-code addition).
+# Lead-content now:
+#   - keeps the branch's recursive-tool pattern (not a GroupChat wrap)
+#   - names TaskConfig subtasks as a negative constraint
+#   - scopes web-probing scout + experience reuse OUT for this PR
+#   - pins default depth cap
+#   - references the 956-line Issue #16 diff as shape-only, not to git-apply
+
+on:
+  workflow_dispatch:
+    inputs:
+      pick-override:
+        description: 'Drafter branch to refine.'
+        required: false
+        default: 'webswarm-recursive-multi-agent-orchestration-for-deep-and-wi-v2'
+      pin-arxiv:
+        description: 'arxiv_id (bypasses selection).'
+        required: false
+        default: '2607.08662v1'
+
+concurrency:
+  group: outrider-moonshot-refine-smoke
+  cancel-in-progress: false
+
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: remyxai/outrider@e975a5b000af9fd5cf4e210dffbc39aa8f2717e5 # v1
+        env:
+          REMYX_API_KEY: ${{ secrets.REMYX_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+          MOONSHOT_API_KEY: ${{ secrets.MOONSHOT_API_KEY }}
+        with:
+          interest-id: 8eac771b-9f9d-4de9-8103-f9711e8bea18
+          mode: recommend
+          publish: pr
+          provider: moonshot
+          model: kimi-k3
+          pin-arxiv: ${{ inputs.pin-arxiv }}
+          start-from-ref: ${{ inputs.pick-override }}
+          lead-content: |
+            REFINEMENT PASS on an existing drafter branch.
+
+            Read this branch's changes (SPEC.md if present, plus
+            autogen/beta/tools/subagents/recursive_search_tool.py and
+            related tests), compare against arxiv:2607.08662v1
+            (WebSwarm: Recursive Multi-Agent Orchestration for
+            Deep-and-Wide Web Search), and refine to (a) match the
+            paper's mechanism and (b) leave no dead code so this
+            ships as a PR rather than an Issue.
+
+            Commit to this implementation strategy — do NOT invent
+            a parallel one:
+
+            1. Reuse the existing autogen/beta/tools/subagents/
+               primitives (run_task, persistent_stream,
+               subagent_tool). The recursion pattern is the
+               self-referential solve_subtasks tool — every node
+               carries it and it spawns structurally-identical
+               children. Do NOT use TaskConfig subtasks (they are
+               structurally non-recursive by design). Do NOT invent
+               a parallel orchestrator or force a GroupChat around
+               a recursive tool.
+
+            2. Wire the tool into at least one real call path.
+               Prior pass produced Issue #16 (fidelity_skipped)
+               because solve_subtasks had no caller in the diff.
+               Minimum wiring to clear the audit:
+                 - Add SearchMode + recursive_search_tool to the
+                   autogen/beta/tools/subagents/__init__.py exports.
+                 - A pytest that constructs the tool, invokes it on
+                   a small query (mock the web search tools if
+                   needed), and asserts on tree shape (fan-out
+                   width honored, depth cap enforced,
+                   downgrade-to-atom at cap).
+               The fidelity audit will decline to open a PR if the
+               new capability is defined but nothing calls it.
+
+            3. Enforce paper rules in code, not prompt text:
+                 - Depth budget: int threaded through tool
+                   closures; at cap return a downgrade sentinel
+                   instead of spawning children. Default depth
+                   cap: 3.
+                 - Fan-out caps (2-3 for wide, 1-2 follow-ups for
+                   deep): code-level max_children param, not
+                   prompt hints.
+                 - Modes atom / deep / wide / entity_collect are
+                   enum values that gate downstream behaviors, not
+                   just prompt strings.
+
+            4. Provider substitutions are fine: WebSearchTool /
+               WebFetchTool in place of Serper / Jina,
+               asyncio.gather in place of ThreadPoolExecutor.
+               Preserve the paper's vocabulary (atom / deep /
+               wide / entity_collect) and its solve-or-delegate
+               readiness loop.
+
+            5. OUT OF SCOPE for this PR: web-probing scout
+               (pre-expansion topology finding) and cross-sibling
+               experience reuse (scout subset for wide batches).
+               Land the core recursion + modes + call-site wiring
+               first; note these omissions in the PR body as
+               follow-up scope.
+
+            6. Where the branch already matches this strategy,
+               verify with focused pytest additions rather than
+               restructuring.
+
+            Note: Issue #16 attached a 956-line audit-flagged diff
+            of an earlier attempt. You may reference it for shape,
+            but treat the branch's current commit as ground truth
+            and rebuild from there rather than git-applying that
+            diff.
+
+            Goal is a PR. Fidelity audit routes to Issue when new
+            code has no call site — the pytest and the __init__
+            export are the minimum wiring to clear it.
+          staged-synthesis: 'true'
+          claude-timeout: '3600'
+          rate-limit-days: '0'

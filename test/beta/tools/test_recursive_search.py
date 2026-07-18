@@ -30,7 +30,7 @@ from autogen.beta.events import (
 )
 from autogen.beta.stream import Stream
 from autogen.beta.testing import TestConfig, TrackingConfig
-from autogen.beta.tools.subagents import (
+from autogen.beta.tools import (
     SearchMode,
     SubtaskSpec,
     recursive_search_agent,

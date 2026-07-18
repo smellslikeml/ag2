@@ -1,0 +1,113 @@
+---
+title: Recursive Search
+sidebarTitle: Recursive Search
+---
+
+Recursive search turns a single complex query into a self-organizing swarm of search nodes that decompose, delegate, and aggregate evidence — deep-and-wide web search via progressive delegation, adapted from [WebSwarm: Recursive Multi-Agent Orchestration for Deep-and-Wide Web Search](https://arxiv.org/abs/2607.08662v1){.external-link target="_blank"}.
+
+## How It Works
+
+Every search node is an agent carrying your search tools plus a self-referential `solve_subtasks` tool, so the swarm grows its own delegation tree at inference time: each node either solves its local objective directly or spawns structurally identical child nodes whose results flow back up as evidence for expansion, revision, or aggregation.
+
+Two budgets keep the tree bounded:
+
+- **Depth budget** (`max_depth`) — threaded through every delegation. When a node's budget is exhausted, `solve_subtasks` spawns nothing and returns a downgrade sentinel instructing the node to solve the objectives itself (atom behavior).
+- **Fan-out cap** (`max_children`) — each `solve_subtasks` call accepts at most this many subtasks; extras are dropped and reported back so the node can solve or re-delegate them.
+
+## Search Modes
+
+Each node carries one of four modes — the paper's delegation verbs — enforced structurally in code, not just described in prompts:
+
+| Mode | Behavior |
+|---|---|
+| `SearchMode.ATOM` | Solves the objective directly with its own search tools. Built **without** `solve_subtasks`, so it cannot delegate. |
+| `SearchMode.DEEP` | Serial propose-then-verify drill-down; capped at 1-2 follow-up children regardless of `max_children`. |
+| `SearchMode.WIDE` | Identifies 2-3 independent aspects and delegates them as homogeneous child nodes, then aggregates. |
+| `SearchMode.ENTITY_COLLECT` | Splits an enumeration space into disjoint partitions, verifies candidates per partition, and merges the verified set. |
+
+The root node's mode is fixed by `search_mode`; every delegated child picks its own mode per subtask via `SubtaskSpec`.
+
+## Recursive Search Tool
+
+`recursive_search_tool()` builds a tool you add to any agent. The tool runs a root search node for the query; the root and every non-atom node beneath it may delegate further.
+
+```python linenums="1"
+from autogen.beta import Agent
+from autogen.beta.config import AnthropicConfig
+from autogen.beta.tools import DuckDuckSearchTool, SearchMode, recursive_search_tool
+
+config = AnthropicConfig(model="claude-sonnet-4-6")
+
+agent = Agent(
+    "researcher",
+    config=config,
+    tools=[
+        recursive_search_tool(
+            config=config,  # nodes are plain agents and need an explicit model
+            search_mode=SearchMode.WIDE,
+            tools=[DuckDuckSearchTool(max_results=5)],
+            max_depth=3,
+            max_children=3,
+        ),
+    ],
+)
+
+reply = await agent.ask("Compare the leading vector databases for a RAG workload.")
+print(await reply.content())
+```
+
+!!! note
+    Search nodes are plain agents and cannot inherit a model from the calling agent, so `config` is required and is shared by every node in the swarm.
+
+!!! tip
+    The caller-supplied `tools` are how the swarm actually searches the web — they substitute for the paper's Serper/Jina integrations. Any search/fetch tools work, e.g. `DuckDuckSearchTool` and `WebFetchTool`; pass mocks in tests.
+
+`recursive_search_tool()` accepts these parameters:
+
+| Parameter | Type | Description |
+|---|---|---|
+| `config` | `ModelConfig` | LLM config shared by every search node (required) |
+| `name` | `str` | Tool name (default: `"recursive_search"`) |
+| `search_mode` | `SearchMode` | Mode of the root node (default: `SearchMode.WIDE`) |
+| `tools` | `Iterable[Tool]` | Search/fetch tools every node uses |
+| `max_depth` | `int` | Delegation depth budget (default: `3`) |
+| `max_children` | `int` | Fan-out cap per delegation call (default: `3`; deep mode is capped at 2 regardless) |
+| `stream` | `StreamFactory \| None` | Optional factory for per-node persistent history, e.g. `persistent_stream()` — see [Sub-task Delegation](/docs/beta/task_delegation) |
+
+## Subtask Specifications
+
+When a node delegates, each subtask is a `SubtaskSpec`:
+
+```python linenums="1"
+from autogen.beta.tools import SearchMode, SubtaskSpec
+
+spec = SubtaskSpec(
+    objective="Find Qdrant's consistency guarantees under concurrent writes",
+    mode=SearchMode.DEEP,
+    context="Comparing vector databases for a RAG workload.",
+)
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `objective` | `str` | Self-contained objective for the child node (required) |
+| `mode` | `SearchMode` | The child's search mode (default: `SearchMode.ATOM`) |
+| `context` | `str` | Extra context handed to the child (default: `""`) |
+
+## Recursive Search Agent
+
+`recursive_search_agent()` is a convenience factory that builds an agent with the recursive search tool pre-configured:
+
+```python linenums="1"
+from autogen.beta.config import AnthropicConfig
+from autogen.beta.tools import DuckDuckSearchTool, recursive_search_agent
+
+agent = recursive_search_agent(
+    config=AnthropicConfig(model="claude-sonnet-4-6"),
+    tools=[DuckDuckSearchTool(max_results=5)],
+    max_depth=2,
+)
+
+reply = await agent.ask("What are the latest advances in quantum error correction?")
+print(await reply.content())
+```

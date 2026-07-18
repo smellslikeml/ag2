@@ -43,10 +43,9 @@ from pydantic import BaseModel
 from autogen.beta import agent as agent_module
 from autogen.beta.annotations import Context
 from autogen.beta.tools.final import FunctionTool, tool
+from autogen.beta.tools.subagents.run_task import TaskResult, run_task
+from autogen.beta.tools.subagents.subagent_tool import StreamFactory
 from autogen.beta.tools.tool import Tool
-
-from .run_task import TaskResult, run_task
-from .subagent_tool import StreamFactory
 
 if TYPE_CHECKING:
     from autogen.beta.agent import Agent
@@ -300,8 +299,7 @@ def recursive_search_tool(
     Example:
         ```python
         from autogen.beta import Agent
-        from autogen.beta.tools import DuckDuckSearchTool
-        from autogen.beta.tools.subagents import recursive_search_tool
+        from autogen.beta.tools import DuckDuckSearchTool, recursive_search_tool
 
         agent = Agent(
             "researcher",
@@ -364,7 +362,7 @@ def recursive_search_agent(
 
     Example:
         ```python
-        from autogen.beta.tools.subagents import recursive_search_agent
+        from autogen.beta.tools import recursive_search_agent
 
         agent = recursive_search_agent(config=config)
         answer = await agent.ask("What are the latest advances in quantum computing?")

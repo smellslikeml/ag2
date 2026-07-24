@@ -1,6 +1,6 @@
 schema_version: 1
 fork: smellslikeml/ag2
-last_updated: '2026-07-13T20:40:58Z'
+last_updated: '2026-07-24T16:52:34Z'
 observed_landing_zones:
 - path: autogen/beta/tools/
   shape_tags:
@@ -105,6 +105,12 @@ rejected_shapes:
     timestamp: '2026-07-13'
     paper_title: 'HarnessAPI: A Skill-First Framework for Unified Streaming APIs and
       MCP Tools'
+- shape_tag: null
+  reason_code: null
+  reason_summary: ''
+  observed:
+  - arxiv: '2607.20709'
+    timestamp: '2026-07-24T16:52:34Z'
 coordination_signals: []
 exploration_budget:
   novel_shape_fraction: 0.25

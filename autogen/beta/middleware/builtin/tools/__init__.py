@@ -3,5 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from .approval import approval_required
+from .repeat_failure_guard import repeat_failure_guard
 
-__all__ = ("approval_required",)
+__all__ = (
+    "approval_required",
+    "repeat_failure_guard",
+)

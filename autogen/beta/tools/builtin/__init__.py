@@ -6,6 +6,7 @@ from .code_execution import CodeExecutionTool
 from .image_generation import ImageGenerationTool
 from .mcp_server import MCPServerTool
 from .memory import MemoryTool
+from .recursive_search import SearchMode, SubtaskSpec, recursive_search_agent, recursive_search_tool
 from .shell import ContainerAutoEnvironment, ContainerReferenceEnvironment, NetworkPolicy, ShellTool
 from .skills import Skill, SkillsTool
 from .web_fetch import WebFetchTool
@@ -20,11 +21,15 @@ __all__ = (
     "MCPServerTool",
     "MemoryTool",
     "NetworkPolicy",
+    "SearchMode",
     "ShellTool",
     "Skill",
     "SkillsTool",
+    "SubtaskSpec",
     "UserLocation",
     "WebFetchTool",
     "WebSearchTool",
     "XSearchTool",
+    "recursive_search_agent",
+    "recursive_search_tool",
 )

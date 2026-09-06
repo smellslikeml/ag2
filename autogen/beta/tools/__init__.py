@@ -21,6 +21,7 @@ from .builtin import (
     XSearchTool,
 )
 from .code import SandboxCodeTool
+from .example_discovery import PlayExample, PlayResult, play_with_tool
 from .final import Toolkit, tool
 from .sandbox import LocalEnvironment
 from .search import DuckDuckSearchTool, PerplexitySearchToolkit, TavilySearchTool
@@ -43,6 +44,8 @@ __all__ = (
     "MemoryTool",
     "NetworkPolicy",
     "PerplexitySearchToolkit",
+    "PlayExample",
+    "PlayResult",
     "SandboxCodeTool",
     "SandboxShellTool",
     "ShellTool",
@@ -58,5 +61,6 @@ __all__ = (
     "WebFetchTool",
     "WebSearchTool",
     "XSearchTool",
+    "play_with_tool",
     "tool",
 )
